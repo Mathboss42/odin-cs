@@ -171,7 +171,20 @@ class LinkedList {
     }
 
     removeAt(index) {
-        
+        if (index < 0) {
+            const err = new Error('Invalid index.');
+            throw err;
+        }
+
+        if (index === 0) {
+            this.head = this.head.nextNode;
+            return;
+        }
+
+        let previousNode = this.getNodeAt(index-1);
+        let currentNode = this.getNodeAt(index);
+
+        previousNode.nextNode = currentNode.nextNode;
     }
 }
 
@@ -219,4 +232,13 @@ list.printList();
 console.log(list.contains(4));
 
 list.insertAt('My Cool Name', 0);
+list.printList();
+
+list.removeAt(0);
+list.printList();
+
+list.removeAt(2);
+list.printList();
+
+list.removeAt(2);
 list.printList();
