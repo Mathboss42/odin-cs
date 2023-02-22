@@ -94,7 +94,32 @@ class LinkedList {
     }
 
     getNodeAt(index) {
-        return;
+        if (index >= this.getSize() || index < 0) {
+            const err = new Error('Index does not exist.'); 
+            throw err;
+        } else {
+            let currentNode = this.head;
+            let i = 0;
+            while (i < index) {
+                currentNode = currentNode.nextNode;
+                i++;
+            }
+            return currentNode.value;
+            // return currentNode;
+        }
+    }
+
+    pop() {
+        let currentNode = this.head;
+        
+        if (currentNode === null) {
+            return
+        } else {
+            while (currentNode.nextNode.nextNode !== null) {
+                currentNode = currentNode.nextNode;
+            }
+            currentNode.nextNode = null;
+        }
     }
 }
 
@@ -127,3 +152,12 @@ console.log(list.getSize());
 
 console.log(list.getHead());
 console.log(list.getTail());
+list.printList();
+list.pop();
+list.printList();
+list.pop();
+list.printList();
+list.pop();
+list.printList();
+console.log(list.getSize());
+console.log(list.getNodeAt(4));
