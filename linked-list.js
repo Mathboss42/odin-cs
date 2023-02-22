@@ -121,6 +121,22 @@ class LinkedList {
             currentNode.nextNode = null;
         }
     }
+
+    contains(value) {
+        let currentNode = this.head;
+
+        if (currentNode === null) {
+            return false;
+        } else {
+            while (currentNode !== null) {
+                if (currentNode.value === value) {
+                    return true;
+                }
+                currentNode = currentNode.nextNode;
+            }
+        }
+        return false;
+    }
 }
 
 
@@ -160,4 +176,7 @@ list.printList();
 list.pop();
 list.printList();
 console.log(list.getSize());
-console.log(list.getNodeAt(4));
+console.log(list.getNodeAt(2));
+
+list.printList();
+console.log(list.contains(4));
