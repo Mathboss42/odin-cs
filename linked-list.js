@@ -75,8 +75,8 @@ class LinkedList {
     }
 
     getHead() {
-        // return this.head; //if we want the actual node and not the value
-        return this.head === null ? null : this.head.value; //if we want the value
+        return this.head; //if we want the actual node and not the value
+        // return this.head === null ? null : this.head.value; //if we want the value
     }
 
     getTail() {
@@ -88,7 +88,7 @@ class LinkedList {
             while(currentNode.nextNode !== null) {
                 currentNode = currentNode.nextNode;
             }
-            return currentNode.value; //if we want value
+            // return currentNode.value; //if we want value
             return currentNode; //if we want node
         }
     }
@@ -104,8 +104,8 @@ class LinkedList {
                 currentNode = currentNode.nextNode;
                 i++;
             }
-            return currentNode.value;
-            // return currentNode;
+            // return currentNode.value; //value
+            return currentNode; //node
         }
     }
 
@@ -136,6 +136,42 @@ class LinkedList {
             }
         }
         return false;
+    }
+
+    find(value) {
+        let currentNode = this.head;
+
+        if (!this.contains(value)) {
+            const err = new Error(`${value} is not part of the list.`);
+        } else {
+            let i = 0;
+            while (currentNode !== null) {
+                if (currentNode.value === value) {
+                    return i;
+                }
+                currentNode = currentNode.nextNode;
+                i++;
+            }
+        }
+    }
+
+    insertAt(value, index) {
+        if (index === 0) {
+            this.prepend(value);
+            return;
+        }
+
+        let previousNode = this.getNodeAt(index-1);
+        let currentNode = this.getNodeAt(index);
+
+        const newNode = new Node(value);
+
+        previousNode.nextNode = newNode;
+        newNode.nextNode = currentNode;
+    }
+
+    removeAt(index) {
+        
     }
 }
 
@@ -177,6 +213,10 @@ list.pop();
 list.printList();
 console.log(list.getSize());
 console.log(list.getNodeAt(2));
+console.log('find', list.find(4));
 
 list.printList();
 console.log(list.contains(4));
+
+list.insertAt('My Cool Name', 0);
+list.printList();
