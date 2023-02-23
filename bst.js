@@ -259,6 +259,18 @@ class Tree {
         const right = this.getHeight(node.right);
         return Math.max(left, right) + 1;
     }
+
+    getDepth(targetNode, currentNode = this.root, index = 1) {
+        if (targetNode.value === currentNode.value) {
+            return index;
+        } else if (targetNode.value < currentNode.value) {
+            index++;
+            return this.getDepth(targetNode, currentNode.left, index);
+        } else if (targetNode.value > currentNode.value) {
+            index++;
+            return this.getDepth(targetNode, currentNode.right, index);
+        }
+    }
 }
 
 
@@ -292,11 +304,13 @@ function biggerThan8(value) {
 // console.log('preOrder', tree.preOrder());
 // console.log('preOrder',tree.preOrder(biggerThan8));
 
-console.log(' ');
+// console.log(' ');
 
-console.log('postOrder', tree.postOrder());
-console.log('postOrder',tree.postOrder(biggerThan8));
+// console.log('postOrder', tree.postOrder());
+// console.log('postOrder',tree.postOrder(biggerThan8));
 
-// tree.inorderRec();
+// // tree.inorderRec();
 
-console.log(tree.getHeight(tree.find(324)));
+// console.log(tree.getHeight(tree.find(324)));
+
+// console.log(tree.getDepth(tree.find(8)));
