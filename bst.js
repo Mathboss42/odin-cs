@@ -170,7 +170,6 @@ class Tree {
 
         if (node.left === null && node.right === null) {
             if (callback === undefined || callback(node.value)) {
-                console.log('hello');
                 return node.value;
             } else {
                 return;
@@ -191,6 +190,64 @@ class Tree {
             values = [...values, b];
         }
 
+        return values.flat();
+    }
+
+    preOrder(callback, node = this.root, values = []) {
+        if (node === null) return;
+
+        if (node.left === null && node.right === null) {
+            if (callback === undefined || callback(node.value)) {
+                return node.value;
+            } else {
+                return;
+            }
+        }
+        
+        if (callback === undefined || callback(node.value)) {
+            values = [...values, node.value];
+        }
+
+        const a = this.preOrder(callback, node.left);
+        if (!(a === undefined)) {
+            values = [...values, a];
+        }
+
+        
+        const b = this.preOrder(callback, node.right);
+        if (!(b === undefined)) {
+            values = [...values, b];
+        }
+        
+        return values.flat();
+    }
+
+    postOrder(callback, node = this.root, values = []) {
+        if (node === null) return;
+
+        if (node.left === null && node.right === null) {
+            if (callback === undefined || callback(node.value)) {
+                return node.value;
+            } else {
+                return;
+            }
+        }
+
+        const a = this.postOrder(callback, node.left);
+        if (!(a === undefined)) {
+            values = [...values, a];
+        }
+
+        
+        const b = this.postOrder(callback, node.right);
+        if (!(b === undefined)) {
+            values = [...values, b];
+        }
+
+        if (callback === undefined || callback(node.value)) {
+            values = [...values, node.value];
+        }
+        
         return values.flat();
     }
 }
@@ -218,7 +275,17 @@ function biggerThan8(value) {
 }
 
 
-console.log(tree.inOrder());
-console.log(tree.inOrder(biggerThan8));
+// console.log('inOrder', tree.inOrder());
+// console.log('inOrder', tree.inOrder(biggerThan8));
+
+// console.log(' ');
+
+// console.log('preOrder', tree.preOrder());
+// console.log('preOrder',tree.preOrder(biggerThan8));
+
+console.log(' ');
+
+console.log('postOrder', tree.postOrder());
+console.log('postOrder',tree.postOrder(biggerThan8));
 
 // tree.inorderRec();
