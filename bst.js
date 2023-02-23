@@ -36,12 +36,12 @@ class Tree {
         }
     }
 
-    insertCheat(value) { //this is the first method that came to mind, though I'm guessing it kind of goes against the exercise, plus changes tree structure so doesn't really work
-        this.array.push(value);
-        this.array = [...new Set(this.array.sort((a, b) => a - b))];
-        this.root = this.buildTree();
-        console.log('insert array', this.array)
-    }
+    // insertCheat(value) { //this is the first method that came to mind, though I'm guessing it kind of goes against the exercise, plus changes tree structure so doesn't really work
+    //     this.array.push(value);
+    //     this.array = [...new Set(this.array.sort((a, b) => a - b))];
+    //     this.root = this.buildTree();
+    //     console.log('insert array', this.array)
+    // }
 
     insert(value) {
         this.root = this.insertRec(value);
@@ -62,13 +62,13 @@ class Tree {
         return node;
     }
 
-    removeCheat(value) { //same comment as insertCheat
-        console.log('array', this.array);
-        this.array.splice(this.array.indexOf(value), 1);
-        console.log('array', this.array);
-        this.array = [...new Set(this.array.sort((a, b) => a - b))];
-        this.root = this.buildTree();
-    }
+    // removeCheat(value) { //same comment as insertCheat
+    //     console.log('array', this.array);
+    //     this.array.splice(this.array.indexOf(value), 1);
+    //     console.log('array', this.array);
+    //     this.array = [...new Set(this.array.sort((a, b) => a - b))];
+    //     this.root = this.buildTree();
+    // }
 
     remove(value) {
         this.root = this.removeRec(value);
@@ -271,6 +271,29 @@ class Tree {
             return this.getDepth(targetNode, currentNode.right, index);
         }
     }
+
+    isBalanced(node = this.root) {
+        if (node === null) {
+            return true;
+        }
+
+        const a = this.isBalanced(node.left);
+        const b = this.isBalanced(node.right);
+
+        if (a && b) {
+            const leftHeight = this.getHeight(node.left);
+            const rightheight = this.getHeight(node.right);
+            const diff = Math.abs(leftHeight - rightheight);
+            return diff < 2;
+        }
+
+        return false;
+    }
+
+    rebalance() {
+        const arr = this.inOrder();
+        this.root = this.buildTree(arr);
+    }
 }
 
 
@@ -278,39 +301,34 @@ class Tree {
 
 
 const tree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
-// tree.prettyPrint(tree.root);
-tree.insert(222);
-// tree.prettyPrint(tree.root);
-tree.remove(4);
-tree.prettyPrint(tree.root);
-
-// console.log(tree.find(5));
-
-// console.log(tree.levelOrder());
-// console.log(tree.levelOrder(biggerThan8));
-
 
 function biggerThan8(value) {
-    // console.log(value > 8);
     return value > 8;
 }
 
 
-// console.log('inOrder', tree.inOrder());
-// console.log('inOrder', tree.inOrder(biggerThan8));
+tree.prettyPrint(tree.root);
+console.log(tree.isBalanced());
 
-// console.log(' ');
+// console.log(tree.isBalanced());
 
-// console.log('preOrder', tree.preOrder());
-// console.log('preOrder',tree.preOrder(biggerThan8));
+// tree.prettyPrint(tree.root);
+// tree.rebalance();
+// tree.prettyPrint(tree.root);
 
-// console.log(' ');
+tree.insert(222);
+tree.insert(545);
+tree.insert(5555);
+tree.remove(4);
+tree.prettyPrint(tree.root);
+console.log(tree.isBalanced());
 
-// console.log('postOrder', tree.postOrder());
-// console.log('postOrder',tree.postOrder(biggerThan8));
+tree.remove(9);
+tree.remove(23);
+tree.prettyPrint(tree.root);
+console.log(tree.isBalanced());
 
-// // tree.inorderRec();
 
-// console.log(tree.getHeight(tree.find(324)));
-
-// console.log(tree.getDepth(tree.find(8)));
+tree.rebalance();
+tree.prettyPrint(tree.root);
+console.log(tree.isBalanced());
