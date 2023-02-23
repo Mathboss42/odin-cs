@@ -121,6 +121,14 @@ class Tree {
     }
 
     levelOrder(callback, node = null, queue = [this.root.value], values = []) {
+        //set node as first element in the queue
+        //remove first element from queue
+        //if root node is null return empty array
+        //if it is NOT null, push value to array
+        //if it has children add them to queue
+        //if it does not, return values array
+        //move to next element of the queue, and do the same
+
         node = this.find(queue[0]);
         if (queue.length > 0) {
             queue.shift();
@@ -137,7 +145,6 @@ class Tree {
                 temp.push(node.value);
             }
         }
-
 
         if (node.left !== null) {
             queue.push(node.left.value);
@@ -157,15 +164,38 @@ class Tree {
 
         return values;
     }
+
+    inOrder(callback, node = this.root, values = []) {
+        if (node === null) return;
+
+        if (node.left === null && node.right === null) {
+            if (callback === undefined || callback(node.value)) {
+                console.log('hello');
+                return node.value;
+            } else {
+                return;
+            }
+        }
+        
+        const a = this.inOrder(callback, node.left);
+        if (!(a === undefined)) {
+            values = [...values, a];
+        }
+        
+        if (callback === undefined || callback(node.value)) {
+            values = [...values, node.value];
+        }
+        
+        const b = this.inOrder(callback, node.right);
+        if (!(b === undefined)) {
+            values = [...values, b];
+        }
+
+        return values.flat();
+    }
 }
 
-//set node as first element in the queue
-//remove first element from queue
-//if root node is null return empty array
-//if it is NOT null, push value to array
-//if it has children add them to queue
-//if it does not, return values array
-//move to next element of the queue, and do the same
+
 
 
 
@@ -178,11 +208,17 @@ tree.prettyPrint(tree.root);
 
 // console.log(tree.find(5));
 
-console.log(tree.levelOrder());
-console.log(tree.levelOrder(biggerThan8));
+// console.log(tree.levelOrder());
+// console.log(tree.levelOrder(biggerThan8));
 
 
 function biggerThan8(value) {
     // console.log(value > 8);
     return value > 8;
 }
+
+
+console.log(tree.inOrder());
+console.log(tree.inOrder(biggerThan8));
+
+// tree.inorderRec();
