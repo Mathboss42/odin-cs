@@ -109,13 +109,80 @@ class Tree {
 
         return minValue;
     }
+
+    find(value, node = this.root) {
+        if (value === node.value) {
+            return node;
+        } else if (value < node.value) {
+            return this.find(value, node.left);
+        } else if (value > node.value) {
+            return this.find(value, node.right);
+        }
+    }
+
+    levelOrder(callback, node = null, queue = [this.root.value], values = []) {
+        node = this.find(queue[0]);
+        if (queue.length > 0) {
+            queue.shift();
+        }
+
+        let temp = [];
+
+        if (!(callback === undefined)) {
+            if (!(node === null) && callback(node.value)) {
+                temp.push(node.value);
+            }
+        } else {
+            if (!(node === null)) {
+                temp.push(node.value);
+            }
+        }
+
+
+        if (node.left !== null) {
+            queue.push(node.left.value);
+        }
+        
+        if (node.right !== null) {
+            queue.push(node.right.value);
+        }
+
+        if (temp.length > 0) {
+            values = [...values, temp[0]];
+        }
+
+        if (queue.length > 0) {
+            return this.levelOrder(callback, queue[0], queue, values);
+        }
+
+        return values;
+    }
 }
 
+//set node as first element in the queue
+//remove first element from queue
+//if root node is null return empty array
+//if it is NOT null, push value to array
+//if it has children add them to queue
+//if it does not, return values array
+//move to next element of the queue, and do the same
+
+
+
 const tree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
-tree.prettyPrint(tree.root);
+// tree.prettyPrint(tree.root);
 tree.insert(222);
-// tree.insertCheat(222);
-tree.prettyPrint(tree.root);
-// tree.removeCheat(7);
+// tree.prettyPrint(tree.root);
 tree.remove(4);
 tree.prettyPrint(tree.root);
+
+// console.log(tree.find(5));
+
+console.log(tree.levelOrder());
+console.log(tree.levelOrder(biggerThan8));
+
+
+function biggerThan8(value) {
+    // console.log(value > 8);
+    return value > 8;
+}
