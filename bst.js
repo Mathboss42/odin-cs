@@ -250,6 +250,15 @@ class Tree {
         
         return values.flat();
     }
+
+    getHeight(node) {
+        if (node === null) { 
+            return 0;
+        }
+        const left = this.getHeight(node.left);
+        const right = this.getHeight(node.right);
+        return Math.max(left, right) + 1;
+    }
 }
 
 
@@ -289,3 +298,5 @@ console.log('postOrder', tree.postOrder());
 console.log('postOrder',tree.postOrder(biggerThan8));
 
 // tree.inorderRec();
+
+console.log(tree.getHeight(tree.find(324)));
