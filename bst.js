@@ -47,7 +47,7 @@ class Tree {
         this.root = this.insertRec(value);
     }
 
-    insertRec(value, node = tree.root) {
+    insertRec(value, node = this.root) {
         if (node === null) {
             node = new Node(value);
             return node;
@@ -300,15 +300,15 @@ class Tree {
 
 
 
-const tree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
+// const tree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
 
-function biggerThan8(value) {
-    return value > 8;
-}
+// function biggerThan8(value) {
+//     return value > 8;
+// }
 
 
-tree.prettyPrint(tree.root);
-console.log(tree.isBalanced());
+// tree.prettyPrint(tree.root);
+// console.log(tree.isBalanced());
 
 // console.log(tree.isBalanced());
 
@@ -316,19 +316,45 @@ console.log(tree.isBalanced());
 // tree.rebalance();
 // tree.prettyPrint(tree.root);
 
-tree.insert(222);
-tree.insert(545);
-tree.insert(5555);
-tree.remove(4);
-tree.prettyPrint(tree.root);
-console.log(tree.isBalanced());
+// tree.insert(222);
+// tree.insert(545);
+// tree.insert(5555);
+// tree.remove(4);
+// tree.prettyPrint(tree.root);
+// console.log(tree.isBalanced());
 
-tree.remove(9);
-tree.remove(23);
-tree.prettyPrint(tree.root);
-console.log(tree.isBalanced());
+// tree.remove(9);
+// tree.remove(23);
+// tree.prettyPrint(tree.root);
+// console.log(tree.isBalanced());
 
 
-tree.rebalance();
-tree.prettyPrint(tree.root);
-console.log(tree.isBalanced());
+// tree.rebalance();
+// tree.prettyPrint(tree.root);
+// console.log(tree.isBalanced());
+
+
+
+
+
+
+// ----------SCRIPT----------- //
+
+const awesomeTree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
+console.log(awesomeTree.isBalanced());
+console.log(awesomeTree.levelOrder());
+console.log(awesomeTree.preOrder());
+console.log(awesomeTree.postOrder());
+console.log(awesomeTree.inOrder());
+awesomeTree.insert(456);
+awesomeTree.insert(456121);
+awesomeTree.insert(111);
+awesomeTree.insert(145);
+awesomeTree.insert(235);
+awesomeTree.insert(675);
+awesomeTree.rebalance();
+console.log(awesomeTree.isBalanced());
+console.log(awesomeTree.levelOrder());
+console.log(awesomeTree.preOrder());
+console.log(awesomeTree.postOrder());
+console.log(awesomeTree.inOrder());
